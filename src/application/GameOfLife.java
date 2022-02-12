@@ -1,9 +1,9 @@
 package application;
 public class GameOfLife {
 	//Data
-	private int width;
-	private int height;
-	private int[][] cells;
+	public int width;
+	public int height;
+	public int[][] cells;
 	//Constructors
 	public GameOfLife(int width, int height) {
 		this.width = width;
