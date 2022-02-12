@@ -45,10 +45,15 @@ public class GameOfLife {
 	}
 	//Setters
 	public void setAlive(int x, int y) {
-		cells[x][y] = 1;
+		setCellState(x, y, 1);
 	}
 	public void setDead(int x, int y) {
-		cells[x][y] = 0;
+		setCellState(x, y, 0);
+	}
+	public void setCellState(int x, int y, int cellState ) {
+		if (x < 0 || x >= width) return;
+		if (y < 0 || y >= height) return;
+		cells[x][y] = cellState;
 	}
 	//Checks each cell using Game of Life logic; creates new cells
 	public void next() {
