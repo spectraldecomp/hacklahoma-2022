@@ -10,6 +10,18 @@ public class GameOfLife {
 		this.height = height;
 		cells = new int[width][height];
 	}
+	public static GameOfLife copy(GameOfLife game) {
+		GameOfLife copy = new GameOfLife(game.width, game.height);
+		
+		for (int i = 0; i < game.height; i++) {
+			for (int j = 0; j < game.width; j++) {
+				copy.setCellState(j, i, game.getCellState(j,i));
+			}
+			
+		}
+		
+		return copy;	
+	}
 	//returns state of cell
 	public int getCellState(int x, int y) {
 		if (x < 0 || x >= width) return 0;

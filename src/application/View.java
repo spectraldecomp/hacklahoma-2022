@@ -17,6 +17,7 @@ public class View extends VBox {
 	
 	private Canvas canvas;
 	private GameOfLife game;
+	private GameOfLife initial;
 	private Affine affine;
 	private int mode = 1;
 	private int state = EDITING;
@@ -35,7 +36,8 @@ public class View extends VBox {
 		
 		affine = new Affine();
 		affine.appendScale(400 / 10, 400/10);
-		game = new GameOfLife(10, 10);
+		initial = new GameOfLife(10, 10);
+		game = GameOfLife.copy(initial);
 
 	}
 	
@@ -49,6 +51,9 @@ public class View extends VBox {
 	}
 	//Method Handler for draw
 	private void handleDraw(MouseEvent event) {
+		
+		if (state == RUNNING) return;
+		
 		double mouseX = event.getX();
 		double mouseY = event.getY();
 		
@@ -58,7 +63,7 @@ public class View extends VBox {
 		int gameCoordX = (int) gameCoords.getX();
 		int gameCoordY = (int) gameCoords.getY();
 		
-		game.setCellState(gameCoordX,gameCoordY, mode);
+		initial.setCellState(gameCoordX,gameCoordY, mode);
 		draw();
 	} catch (NonInvertibleTransformException e) {
 		System.out.println("Something has gone terribly wrong");
@@ -70,12 +75,9 @@ public class View extends VBox {
 		gc.setTransform(affine);
 		gc.setFill(Color.LIGHTGRAY);
 		gc.fillRect(0,0,400,400);
-		gc.setFill(Color.BLACK);
-		for (int j = 0; j < game.width; j++) {
-			for (int i = 0; i < game.height; i++) {
-				if (game.getCellState(j, i) == 1) gc.fillRect(j,i,1,1);
-			}
-		}
+		
+		if (state == EDITING) drawGameOfLife(initial);
+		else drawGameOfLife(game);
 		gc.setStroke(Color.GRAY);
 		gc.setLineWidth(0.05);
 		for (int j = 0; j <= game.width; j++) {
@@ -86,6 +88,15 @@ public class View extends VBox {
 		}
 	}
 	
+	public void drawGameOfLife(GameOfLife draw) {
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.setFill(Color.BLACK);
+		for (int j = 0; j < draw.width; j++) {
+			for (int i = 0; i < draw.height; i++) {
+				if (draw.getCellState(j, i) == 1) gc.fillRect(j,i,1,1);
+			}
+		}
+	}
 
 	public GameOfLife getGameOfLife() {
 		return game;
@@ -96,6 +107,9 @@ public class View extends VBox {
 	}
 	public void setState(int state) {
 		if (state == this.state) return;
+		if (state == RUNNING) {
+		this.game = GameOfLife.copy(initial);
+		}
 		this.state = state;
 	}
 }
