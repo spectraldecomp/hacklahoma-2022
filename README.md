@@ -1,2 +1,2 @@
-# hacklahoma-2022
-Repository for Hacklahoma 2022 Project
+# Hacklahoma 2022
+- This repository serves to support my Hacklahoma 2022 project. 
