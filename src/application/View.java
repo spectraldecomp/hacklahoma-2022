@@ -15,25 +15,23 @@ import javafx.scene.transform.NonInvertibleTransformException;
 
 public class View extends VBox {
 	
-	private Button nextButton;
 	private Canvas canvas;
 	private GameOfLife game;
 	private Affine affine;
 	private int mode = 1;
+	private int state = EDITING;
+	public static final int EDITING = 0;
+	public static final int RUNNING = 1;
 	
 	
 	public View(){
-		nextButton = new Button("next");
-		nextButton.setOnAction(actionEvent->{
-			game.next();
-			draw();
-		});
+
 		canvas = new Canvas(400, 400);
 		canvas.setOnMousePressed(this::handleDraw);
 		canvas.setOnMouseDragged(this::handleDraw);
 		this.setOnKeyPressed(this::onKeyPressed);
-		
-		getChildren().addAll(nextButton, canvas);
+		Toolbar toolbar = new Toolbar(this);
+		getChildren().addAll(toolbar, canvas);
 		
 		affine = new Affine();
 		affine.appendScale(400 / 10, 400/10);
@@ -87,6 +85,18 @@ public class View extends VBox {
 			gc.strokeLine(0, i, 10, i);
 		}
 	}
+	
 
+	public GameOfLife getGameOfLife() {
+		return game;
+		
+	}
+	public void setDrawMode(int mode) {
+		this.mode = mode;
+	}
+	public void setState(int state) {
+		if (state == this.state) return;
+		this.state = state;
+	}
 }
 

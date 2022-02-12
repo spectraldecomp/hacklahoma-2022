@@ -10,20 +10,6 @@ public class GameOfLife {
 		this.height = height;
 		cells = new int[width][height];
 	}
-	//Prints cells to console
-	public void printCells() {
-		for (int i = 0; i < height; i++) {
-			String str = "||";
-			for (int j = 0; j < width; j++) {
-				if (cells[j][i] == 0) str+=".";
-				if (cells[j][i] == 1) str+="X";
-			}
-			str+="||";
-			System.out.println(str);
-			
-		}
-		System.out.println();
-	}
 	//returns state of cell
 	public int getCellState(int x, int y) {
 		if (x < 0 || x >= width) return 0;
@@ -74,22 +60,7 @@ public class GameOfLife {
 		}
 		cells = newcells;
 	}
-	
-	//Main method
-	public static void main(String[] args) {
-		GameOfLife game = new GameOfLife(3, 5);
-		game.setAlive(0, 3);
-		game.setAlive(1, 3);
-		game.setAlive(2, 3);
-		game.printCells();
-		game.next();
-		game.printCells();
-		game.next();
-		game.printCells();
-
-		
-	}
-	
-	
-	
 }
+	
+	
+	
