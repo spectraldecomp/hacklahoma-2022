@@ -38,4 +38,28 @@ public class GameOfLife {
 		count += getCellState(x + 1, y + 1);
 		return count;
 	}
+	
+	public void setAlive(int x, int y) {
+		cells[x][y] = 1;
 	}
+	public void setDead(int x, int y) {
+		cells[x][y] = 0;
+	}
+	
+	public void next() {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				int adjacent = countAdjacent(i, j);
+				if (cells[i][j] == 1) {
+					if (adjacent < 2) cells[i][j] = 0;
+					if (adjacent == 3 || adjacent == 4) cells[i][j] = 1;
+					if (adjacent > 4) cells[i][j] = 0;
+				}
+				if (cells[i][j] == 0) {
+					if (adjacent == 3) cells[i][j] = 1;
+					else cells[i][j] = 0;
+				}
+			}
+		}
+	}
+}
