@@ -2,7 +2,7 @@
 - This repository serves to support my Hacklahoma 2022 project. 
 
 ## Theory for Dynamic Ruleset
-- Goal is to create a cell structure that dynamically changed its ruleset to guarantee proliferation (but not entirely overwhelm the scene; i.e. still contain some organic pattern).
+- Goal is to create a cell structure that dynamically changes its ruleset to organically proliferate.
 - How do we do this?
 ### Dynamic Ruleset Logic
 - The standard ruleset for Conway's Game of Life is as follows: 
@@ -13,7 +13,7 @@
 - How can we quantify the overall "`goodness`" of the system?
    - We can try to measure the number of cells that are overcrowded and the number of cells that are undercrowded and find a healthy balance.
    - Perhaps we can individually measure the `goodness` of each cell check and apply a multiplier for a more accurate estimate.
-   - If this all works, the system should *hopefully* reach equilibrium and proliferate. 
+   - If this all works, the system should *hopefully* proliferate.
 
 
 

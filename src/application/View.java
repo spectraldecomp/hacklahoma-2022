@@ -15,23 +15,21 @@ import javafx.scene.transform.NonInvertibleTransformException;
 
 public class View extends VBox {
 	
+	//Data
 	private Canvas canvas;
 	private GameOfLife game;
 	private GameOfLife initial;
-	
 	private Driver driver;
-	
-	
 	private Affine affine;
 	private int mode = 1;
 	private int state = EDITING;
 	public static final int EDITING = 0;
 	public static final int RUNNING = 1;
 	
-	
+	//Constructor
 	public View(){
 
-		canvas = new Canvas(400, 400);
+		canvas = new Canvas(752, 782);
 		canvas.setOnMousePressed(this::handleDraw);
 		canvas.setOnMouseDragged(this::handleDraw);
 		this.setOnKeyPressed(this::onKeyPressed);
@@ -39,12 +37,12 @@ public class View extends VBox {
 		getChildren().addAll(toolbar, canvas);
 		
 		affine = new Affine();
-		affine.appendScale(400 / 10, 400/10);
-		initial = new GameOfLife(10, 10);
+		affine.appendScale(50, 50);
+		initial = new GameOfLife(15, 15);
 		game = GameOfLife.copy(initial);
 
 	}
-	
+	// Switches between pen and eraser mode via "1" and "2" keys
 	private void onKeyPressed(KeyEvent keyEvent) {
 		if(keyEvent.getCode() == KeyCode.DIGIT1) {
 			mode = 1;
@@ -73,42 +71,49 @@ public class View extends VBox {
 		System.out.println("Something has gone terribly wrong");
 		}
 	}
-	
+	//Draws scene; calls drawGameOfLife
 	public void draw() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setTransform(affine);
-		gc.setFill(Color.LIGHTGRAY);
-		gc.fillRect(0,0,400,400);
+		gc.setFill(Color.LIGHTGOLDENRODYELLOW);
+		gc.fillRect(0,0,800,800);
 		
 		if (state == EDITING) drawGameOfLife(initial);
 		else drawGameOfLife(game);
 		gc.setStroke(Color.GRAY);
 		gc.setLineWidth(0.05);
 		for (int j = 0; j <= game.width; j++) {
-			gc.strokeLine(j, 0, j, 10);
+			gc.strokeLine(j, 0, j, 15);
 		}
 		for (int i = 0; i <= game.height; i++) {
-			gc.strokeLine(0, i, 10, i);
+			gc.strokeLine(0, i, 15, i);
 		}
 	}
-	
+	//Draws generation of cells
 	public void drawGameOfLife(GameOfLife draw) {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		gc.setFill(Color.BLACK);
+		gc.setFill(Color.FIREBRICK);
 		for (int j = 0; j < draw.width; j++) {
 			for (int i = 0; i < draw.height; i++) {
 				if (draw.getCellState(j, i) == 1) gc.fillRect(j,i,1,1);
 			}
 		}
 	}
-
+	
+	//Getters
 	public GameOfLife getGameOfLife() {
 		return game;
-		
 	}
+	public Driver getDriver() {
+		return driver;
+	}
+	
+	//Setters
+	//Changes mode of drawing
 	public void setDrawMode(int mode) {
 		this.mode = mode;
 	}
+	//Changes game state -- Editing or Running: The board cannot be edited in running mode
 	public void setState(int state) {
 		if (state == this.state) return;
 		if (state == RUNNING) {
@@ -116,9 +121,6 @@ public class View extends VBox {
 		driver = new Driver(this, game);
 		}
 		this.state = state;
-	}
-	public Driver getDriver() {
-		return driver;
 	}
 }
 
