@@ -18,6 +18,10 @@ public class View extends VBox {
 	private Canvas canvas;
 	private GameOfLife game;
 	private GameOfLife initial;
+	
+	private Driver driver;
+	
+	
 	private Affine affine;
 	private int mode = 1;
 	private int state = EDITING;
@@ -109,8 +113,12 @@ public class View extends VBox {
 		if (state == this.state) return;
 		if (state == RUNNING) {
 		this.game = GameOfLife.copy(initial);
+		driver = new Driver(this, game);
 		}
 		this.state = state;
+	}
+	public Driver getDriver() {
+		return driver;
 	}
 }
 
