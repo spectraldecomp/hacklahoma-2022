@@ -1,5 +1,5 @@
 # Hacklahoma 2022
-- This repository serves to support my Hacklahoma 2022 project. 
+- This repository serves to support my Hacklahoma 2022 project. I had 24 hours to complete this project; I spent about 9 hours on it.  
 
 ## Theory for Dynamic Ruleset
 - Goal is to create a cell structure that dynamically changes its ruleset to organically proliferate.
